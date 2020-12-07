@@ -2,21 +2,29 @@
 
 An Amazon S3 component for Yii2.
 
-[![License](https://poser.pugx.org/bpsys/yii2-aws-s3/license)](https://github.com/bpsys/yii2-aws-s3/blob/2.x/LICENSE)
-[![Latest Stable Version](https://poser.pugx.org/bpsys/yii2-aws-s3/v/stable)](https://packagist.org/packages/bpsys/yii2-aws-s3)
-[![Total Downloads](https://poser.pugx.org/bpsys/yii2-aws-s3/downloads)](https://packagist.org/packages/bpsys/yii2-aws-s3)
-[![Latest Unstable Version](https://poser.pugx.org/bpsys/yii2-aws-s3/v/unstable)](https://packagist.org/packages/bpsys/yii2-aws-s3)
+[![License](https://poser.pugx.org/bp-sys/yii2-aws-s3/license)](https://github.com/bp-sys/yii2-aws-s3/blob/2.x/LICENSE)
+[![Latest Stable Version](https://poser.pugx.org/bp-sys/yii2-aws-s3/v/stable)](https://packagist.org/packages/bp-sys/yii2-aws-s3)
+[![Total Downloads](https://poser.pugx.org/bp-sys/yii2-aws-s3/downloads)](https://packagist.org/packages/bp-sys/yii2-aws-s3)
+[![Latest Unstable Version](https://poser.pugx.org/bp-sys/yii2-aws-s3/v/unstable)](https://packagist.org/packages/bp-sys/yii2-aws-s3)
 
 > Yii2 AWS S3 uses [SemVer](http://semver.org/).
 
-> Version 2.x requires PHP 7. For PHP less 7.0 use [1.x](https://github.com/bpsys/yii2-aws-s3/tree/1.x).
+> Version 2.x requires PHP 7. For PHP less 7.0 use [1.x](https://github.com/bp-sys/yii2-aws-s3/tree/1.x).
+
+## About this project
+
+This project is a fork from the excellent project [yii2-aws-s3](https://github.com/frostealth/yii2-aws-s3) by [frostealth](https://github.com/frostealth) and [adnsio](https://github.com/adnsio).
+
+Upon their work, we add support for IAM role attached to the EC2, which you don't need to insert your credentials.
+
+We will also add support for easier integration with your models, by adding a S3MediaTrait.
 
 ## Installation
 
 1. Run the [Composer](http://getcomposer.org/download/) command to install the latest version:
 
     ```bash
-    composer require bpsys/yii2-aws-s3 ~2.0
+    composer require bp-sys/yii2-aws-s3 ~2.0
     ```
 
 2. Add the component to `config/main.php`
