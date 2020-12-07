@@ -134,7 +134,7 @@ Attach the Trait to the model with some media attribute that will be saved in S3
 ```php
 class Person extends \yii\db\ActiveRecord
 {
-    use \common\traits\S3MediaTrait;
+    use \bpsys\yii2\aws\s3\traits\S3MediaTrait;
     
     // ...
 }
