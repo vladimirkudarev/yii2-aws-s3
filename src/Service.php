@@ -36,7 +36,7 @@ class Service extends Component implements ServiceInterface
     public $defaultAcl = '';
 
     /** @var array S3Client config */
-    protected $clientConfig = ['version' => '2006-03-01'];
+    protected $clientConfig = ['version' => 'latest'];
 
     /** @var array */
     private $components = [];
@@ -50,10 +50,6 @@ class Service extends Component implements ServiceInterface
      */
     public function init()
     {
-        if (empty($this->clientConfig['credentials'])) {
-            throw new InvalidConfigException('Credentials are not set.');
-        }
-
         if (empty($this->clientConfig['region'])) {
             throw new InvalidConfigException('Region is not set.');
         }

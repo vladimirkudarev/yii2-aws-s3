@@ -2,10 +2,7 @@
 
 An Amazon S3 component for Yii2.
 
-[![License](https://poser.pugx.org/bp-sys/yii2-aws-s3/license)](https://github.com/bp-sys/yii2-aws-s3/blob/2.x/LICENSE)
-[![Latest Stable Version](https://poser.pugx.org/bp-sys/yii2-aws-s3/v/stable)](https://packagist.org/packages/bp-sys/yii2-aws-s3)
-[![Total Downloads](https://poser.pugx.org/bp-sys/yii2-aws-s3/downloads)](https://packagist.org/packages/bp-sys/yii2-aws-s3)
-[![Latest Unstable Version](https://poser.pugx.org/bp-sys/yii2-aws-s3/v/unstable)](https://packagist.org/packages/bp-sys/yii2-aws-s3)
+[![License](https://poser.pugx.org/bp-sys/yii2-aws-s3/license)](https://github.com/bp-sys/yii2-aws-s3/blob/2.x/LICENSE) [![Latest Stable Version](https://poser.pugx.org/bp-sys/yii2-aws-s3/v)](//packagist.org/packages/bp-sys/yii2-aws-s3) [![Total Downloads](https://poser.pugx.org/bp-sys/yii2-aws-s3/downloads)](//packagist.org/packages/bp-sys/yii2-aws-s3) [![Latest Unstable Version](https://poser.pugx.org/bp-sys/yii2-aws-s3/v/unstable)](//packagist.org/packages/bp-sys/yii2-aws-s3)
 
 > Yii2 AWS S3 uses [SemVer](http://semver.org/).
 
