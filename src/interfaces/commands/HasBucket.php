@@ -1,11 +1,11 @@
 <?php
 
-namespace frostealth\yii2\aws\s3\interfaces\commands;
+namespace bpsys\yii2\aws\s3\interfaces\commands;
 
 /**
  * Interface HasBucket
  *
- * @package frostealth\yii2\aws\s3\interfaces\commands
+ * @package bpsys\yii2\aws\s3\interfaces\commands
  */
 interface HasBucket
 {

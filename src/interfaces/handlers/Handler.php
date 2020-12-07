@@ -1,11 +1,11 @@
 <?php
 
-namespace frostealth\yii2\aws\s3\interfaces\handlers;
+namespace bpsys\yii2\aws\s3\interfaces\handlers;
 
 /**
  * Interface Handler
  *
- * @package frostealth\yii2\aws\s3\interfaces\handlers
+ * @package bpsys\yii2\aws\s3\interfaces\handlers
  */
 interface Handler
 {

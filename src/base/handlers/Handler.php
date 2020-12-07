@@ -1,14 +1,14 @@
 <?php
 
-namespace frostealth\yii2\aws\s3\base\handlers;
+namespace bpsys\yii2\aws\s3\base\handlers;
 
 use Aws\S3\S3Client;
-use frostealth\yii2\aws\s3\interfaces\handlers\Handler as HandlerInterface;
+use bpsys\yii2\aws\s3\interfaces\handlers\Handler as HandlerInterface;
 
 /**
  * Class Handler
  *
- * @package frostealth\yii2\aws\s3\base\handlers
+ * @package bpsys\yii2\aws\s3\base\handlers
  */
 abstract class Handler implements HandlerInterface
 {

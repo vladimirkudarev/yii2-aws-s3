@@ -1,17 +1,17 @@
 <?php
 
-namespace frostealth\yii2\aws\s3;
+namespace bpsys\yii2\aws\s3;
 
 use Aws\S3\S3Client;
-use frostealth\yii2\aws\s3\handlers\PlainCommandHandler;
-use frostealth\yii2\aws\s3\interfaces;
+use bpsys\yii2\aws\s3\handlers\PlainCommandHandler;
+use bpsys\yii2\aws\s3\interfaces;
 use yii\base\Configurable;
 use yii\base\Exception;
 
 /**
  * Class HandlerResolver
  *
- * @package frostealth\yii2\aws\s3
+ * @package bpsys\yii2\aws\s3
  */
 class HandlerResolver implements interfaces\HandlerResolver, Configurable
 {
@@ -49,9 +49,9 @@ class HandlerResolver implements interfaces\HandlerResolver, Configurable
     }
 
     /**
-     * @param \frostealth\yii2\aws\s3\interfaces\commands\Command $command
+     * @param \bpsys\yii2\aws\s3\interfaces\commands\Command $command
      *
-     * @return \frostealth\yii2\aws\s3\interfaces\handlers\Handler
+     * @return \bpsys\yii2\aws\s3\interfaces\handlers\Handler
      * @throws \yii\base\Exception
      */
     public function resolve(interfaces\commands\Command $command): interfaces\handlers\Handler
@@ -111,7 +111,7 @@ class HandlerResolver implements interfaces\HandlerResolver, Configurable
     /**
      * @param string|array $type
      *
-     * @return \frostealth\yii2\aws\s3\interfaces\handlers\Handler
+     * @return \bpsys\yii2\aws\s3\interfaces\handlers\Handler
      * @throws \yii\base\InvalidConfigException
      */
     protected function createHandler($type): interfaces\handlers\Handler
