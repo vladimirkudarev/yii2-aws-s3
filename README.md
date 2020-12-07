@@ -105,27 +105,64 @@ $url = $s3->getUrl('filename.ext');
 $signedUrl = $s3->getPresignedUrl('filename.ext', '+2 days');
 ```
 
-### Asynchronous execution
-
-```php
-/** @var \bpsys\yii2\aws\s3\Service $s3 */
-$s3 = Yii::$app->get('s3');
-
-/** @var \GuzzleHttp\Promise\PromiseInterface $promise */
-$promise = $s3->commands()->get('filename.ext')->async()->execute();
-
-$promise = $s3->commands()->put('filename.ext', 'body')->async()->execute();
-
-$promise = $s3->commands()->delete('filename.ext')->async()->execute();
-
-$promise = $s3->commands()->upload('filename.ext', 'source')->async()->execute();
-
-$promise = $s3->commands()->list('path/')->async()->execute();
-```
+[Read more...](/docs/basic-usage.md)
 
 ## Advanced usage
 
-[Read more here](/docs/advanced-usage.md)
+```php
+/** @var \bpsys\yii2\aws\s3\interfaces\Service $s3 */
+$s3 = Yii::$app->get('s3');
+
+/** @var \bpsys\yii2\aws\s3\commands\GetCommand $command */
+$command = $s3->create(GetCommand::class);
+$command->inBucket('my-another-bucket')->byFilename('filename.ext')->saveAs('/path/to/local/file.ext');
+
+/** @var \Aws\ResultInterface $result */
+$result = $s3->execute($command);
+
+// or async
+/** @var \GuzzleHttp\Promise\PromiseInterface $promise */
+$promise = $s3->execute($command->async());
+```
+
+[Read more...](/docs/advanced-usage.md)
+
+## Using Traits
+
+Attach the Trait to the model with some media attribute that will be saved in S3:
+
+```php
+class Person extends \yii\db\ActiveRecord
+{
+    use \common\traits\S3MediaTrait;
+    
+    // ...
+}
+```
+
+```php
+$image = \yii\web\UploadedFile::getInstance( $formModel, 'my_file_attribute' );
+// Save image as my_image.png on S3 at //my_bucket/images/ path
+// $model->image will hold "my_image.png" after this call finish with success
+$model->saveUploadedFile( $image, 'image', 'my_image.png' );
+
+// Get the URL to the image on S3
+$model->getFileUrl( 'image' );
+// Get the presigned URL to the image on S3
+// The default duration is "+1 day"
+$model->getFilePresignedUrl( 'image' );
+
+// Remove the file with named saved on the image attribute
+// Continuing the example, here "//my_bucket/images/my_image.png" will be deleted from S3
+$model->removeFile( 'image' );
+
+// Save my_image.* to S3 on //my_bucket/images/ path
+// The extension of the file will be determined by the submitted file type
+// This allows multiple file types upload (png,jpg,gif,...)
+$model->saveUploadedFile( $image, 'image', 'my_image', true );
+```
+
+[Read more...](/docs/media-traits.md)
 
 ## License
 
