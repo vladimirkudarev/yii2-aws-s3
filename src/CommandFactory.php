@@ -154,11 +154,11 @@ class CommandFactory
      *
      * @return \bpsys\yii2\aws\s3\commands\GetPresignedUrlCommand
      */
-    public function getPresignedUrl(string $filename, $expires): GetPresignedUrlCommand
+    public function getPresignedUrl(string $filename, $expires = null): GetPresignedUrlCommand
     {
         /** @var GetPresignedUrlCommand $command */
         $command = $this->builder->build(GetPresignedUrlCommand::class);
-        $command->byFilename($filename)->withExpiration($expires);
+        $command->byFilename($filename)->withExpiration(!$expires ? $command->getExpiration() : $expires);
 
         return $command;
     }

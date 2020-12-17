@@ -38,6 +38,7 @@ We will also add support for easier integration with your models, by adding a S3
             'region' => 'my-region',
             'defaultBucket' => 'my-bucket',
             'defaultAcl' => 'public-read',
+            'defaultPresignedExpiration' => '+1 hour',
         ],
         // ...
     ],
@@ -102,7 +103,7 @@ $exist = $s3->exist('filename.ext');
 $url = $s3->getUrl('filename.ext');
 
 /** @var string $signedUrl */
-$signedUrl = $s3->getPresignedUrl('filename.ext', '+2 days');
+$signedUrl = $s3->getPresignedUrl('filename.ext', '+2 days'); // Pass only one parameter to get expiration date from component defaults
 ```
 
 [Read more...](/docs/basic-usage.md)

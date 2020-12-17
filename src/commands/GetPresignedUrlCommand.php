@@ -4,6 +4,7 @@ namespace bpsys\yii2\aws\s3\commands;
 
 use bpsys\yii2\aws\s3\base\commands\ExecutableCommand;
 use bpsys\yii2\aws\s3\interfaces\commands\HasBucket;
+use bpsys\yii2\aws\s3\interfaces\commands\HasExpiration;
 
 /**
  * Class GetPresignedUrlCommand
@@ -12,7 +13,7 @@ use bpsys\yii2\aws\s3\interfaces\commands\HasBucket;
  *
  * @package bpsys\yii2\aws\s3\commands
  */
-class GetPresignedUrlCommand extends ExecutableCommand implements HasBucket
+class GetPresignedUrlCommand extends ExecutableCommand implements HasBucket, HasExpiration
 {
     /** @var array */
     protected $args = [];

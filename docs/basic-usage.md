@@ -56,6 +56,10 @@ $url = $s3->getUrl('filename.ext');
 
 /** @var string $signedUrl */
 $signedUrl = $s3->getPresignedUrl('filename.ext', '+2 days');
+
+/** @var string $signedUrl */
+// Leave second parameter blank to get from default
+$signedUrl = $s3->getPresignedUrl('filename.ext');
 ```
 
 ## Asynchronous execution

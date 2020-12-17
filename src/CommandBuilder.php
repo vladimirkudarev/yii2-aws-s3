@@ -17,6 +17,9 @@ class CommandBuilder implements interfaces\CommandBuilder
     /** @var string default acl */
     protected $acl;
 
+    /** @var int|string|\DateTime default expiration */
+    protected $expiration;
+
     /** @var interfaces\Bus */
     protected $bus;
 
@@ -24,14 +27,16 @@ class CommandBuilder implements interfaces\CommandBuilder
      * CommandBuilder constructor.
      *
      * @param \bpsys\yii2\aws\s3\interfaces\Bus $bus
-     * @param string                                 $bucket
-     * @param string                                 $acl
+     * @param string $bucket
+     * @param string $acl
+     * @param int|string|\DateTime $expiration
      */
-    public function __construct(interfaces\Bus $bus, string $bucket = '', string $acl = '')
+    public function __construct(interfaces\Bus $bus, string $bucket = '', string $acl = '', $expiration = '')
     {
         $this->bus = $bus;
         $this->bucket = $bucket;
         $this->acl = $acl;
+        $this->expiration = $expiration;
     }
 
     /**
@@ -63,6 +68,10 @@ class CommandBuilder implements interfaces\CommandBuilder
 
         if ($command instanceof interfaces\commands\HasAcl) {
             $command->withAcl($this->acl);
+        }
+
+        if ($command instanceof interfaces\commands\HasExpiration) {
+            $command->withExpiration($this->expiration);
         }
     }
 }

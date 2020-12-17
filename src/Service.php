@@ -35,6 +35,9 @@ class Service extends Component implements ServiceInterface
     /** @var string */
     public $defaultAcl = '';
 
+    /** @var int|string|\DateTime */
+    public $defaultPresignedExpiration = '';
+
     /** @var array S3Client config */
     protected $clientConfig = ['version' => 'latest'];
 
@@ -262,7 +265,7 @@ class Service extends Component implements ServiceInterface
                 $params = [$this->getComponent('resolver')];
                 break;
             case 'builder':
-                $params = [$this->getComponent('bus'), $this->defaultBucket, $this->defaultAcl];
+                $params = [$this->getComponent('bus'), $this->defaultBucket, $this->defaultAcl, $this->defaultPresignedExpiration];
                 break;
             case 'factory':
                 $params = [$this->getComponent('builder')];
