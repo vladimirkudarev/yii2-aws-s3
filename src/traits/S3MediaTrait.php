@@ -44,14 +44,13 @@ trait S3MediaTrait
         }
 
         /** @var \Aws\ResultInterface $result */
-        $commands = $this->getS3Component()
+        $result = $this->getS3Component()
             ->commands()
             ->upload(
                 $this->getAttributePath( $attribute ) . $fileName,
                 $file->tempName
             )
             ->withContentType( $file->type )
-            ->withAcl( 'private' )
             ->execute();
 
         // Validate successful upload to S3
