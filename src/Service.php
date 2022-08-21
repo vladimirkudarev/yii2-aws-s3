@@ -24,6 +24,7 @@ use yii\helpers\ArrayHelper;
  * @method bool             exist(string $filename)
  * @method string           getUrl(string $filename)
  * @method string           getPresignedUrl(string $filename, $expires)
+ * @property string         $endpoint
  *
  * @package bpsys\yii2\aws\s3
  */
@@ -157,6 +158,15 @@ class Service extends Component implements ServiceInterface
     public function setHttpOptions(array $options)
     {
         $this->clientConfig['http'] = $options;
+    }
+
+    /**
+     * @param string $endpoint
+     */
+    public function setEndpoint(string $endpoint)
+    {
+        $this->clientConfig['endpoint']                = $endpoint;
+        $this->clientConfig['use_path_style_endpoint'] = true;
     }
 
     /**

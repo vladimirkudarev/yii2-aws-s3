@@ -39,12 +39,14 @@ We will also add support for easier integration with your models, by adding a S3
             'defaultBucket' => 'my-bucket',
             'defaultAcl' => 'public-read',
             'defaultPresignedExpiration' => '+1 hour',
+            'endpoint' => 'http://localhost:9000',
         ],
         // ...
     ],
     ```
 
 **Credentials parameter is optional**: if you plan to use IAM roles attached to your EC2 instance there is no need for credentials. Just remove this parameter. Just be cautious if you need those credentials, this may cause errors during execution.
+**Endpoint parameter is optional**: You can specify a custom endpoint here. Great for debugging with minio for example.
 
 ## Basic usage
 
