@@ -10,7 +10,7 @@ An Amazon S3 component for Yii2.
 
 ## About this project
 
-This project is a fork from the excellent project [yii2-aws-s3](https://github.com/frostealth/yii2-aws-s3) by [frostealth](https://github.com/frostealth) and [adnsio](https://github.com/adnsio).
+This project is a fork from the excellent project [yii2-aws-s3](https://github.com/frostealth/yii2-aws-s3) by [frostealth](https://github.com/frostealth) and [adnsio](https://github.com/adnsio) and [bp-sys](https://github.com/bp-sys).
 
 Upon their work, we add support for IAM role attached to the EC2, which you don't need to insert your credentials.
 
@@ -21,7 +21,7 @@ We will also add support for easier integration with your models, by adding a S3
 1. Run the [Composer](http://getcomposer.org/download/) command to install the latest version:
 
     ```bash
-    composer require bp-sys/yii2-aws-s3 ~2.0
+    composer vladimirkudarev/yii2-aws-s3 ~2.0
     ```
 
 2. Add the component to `config/main.php`
