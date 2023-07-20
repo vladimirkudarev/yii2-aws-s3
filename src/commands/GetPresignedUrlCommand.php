@@ -1,18 +1,19 @@
 <?php
 
-namespace frostealth\yii2\aws\s3\commands;
+namespace bpsys\yii2\aws\s3\commands;
 
-use frostealth\yii2\aws\s3\base\commands\ExecutableCommand;
-use frostealth\yii2\aws\s3\interfaces\commands\HasBucket;
+use bpsys\yii2\aws\s3\base\commands\ExecutableCommand;
+use bpsys\yii2\aws\s3\interfaces\commands\HasBucket;
+use bpsys\yii2\aws\s3\interfaces\commands\HasExpiration;
 
 /**
  * Class GetPresignedUrlCommand
  *
  * @method string execute()
  *
- * @package frostealth\yii2\aws\s3\commands
+ * @package bpsys\yii2\aws\s3\commands
  */
-class GetPresignedUrlCommand extends ExecutableCommand implements HasBucket
+class GetPresignedUrlCommand extends ExecutableCommand implements HasBucket, HasExpiration
 {
     /** @var array */
     protected $args = [];

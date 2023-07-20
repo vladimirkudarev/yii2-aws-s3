@@ -1,16 +1,16 @@
 <?php
 
-namespace frostealth\yii2\aws\s3\commands;
+namespace bpsys\yii2\aws\s3\commands;
 
-use frostealth\yii2\aws\s3\base\commands\ExecutableCommand;
-use frostealth\yii2\aws\s3\interfaces\commands\HasBucket;
+use bpsys\yii2\aws\s3\base\commands\ExecutableCommand;
+use bpsys\yii2\aws\s3\interfaces\commands\HasBucket;
 
 /**
  * Class GetUrlCommand
  *
  * @method string execute()
  *
- * @package frostealth\yii2\aws\s3\commands
+ * @package bpsys\yii2\aws\s3\commands
  */
 class GetUrlCommand extends ExecutableCommand implements HasBucket
 {

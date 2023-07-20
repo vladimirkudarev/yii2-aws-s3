@@ -1,13 +1,13 @@
 <?php
 
-namespace frostealth\yii2\aws\s3;
+namespace bpsys\yii2\aws\s3;
 
-use frostealth\yii2\aws\s3\interfaces;
+use bpsys\yii2\aws\s3\interfaces;
 
 /**
  * Class Bus
  *
- * @package frostealth\yii2\aws\s3
+ * @package bpsys\yii2\aws\s3
  */
 class Bus implements interfaces\Bus
 {
@@ -17,7 +17,7 @@ class Bus implements interfaces\Bus
     /**
      * Bus constructor.
      *
-     * @param \frostealth\yii2\aws\s3\interfaces\HandlerResolver $inflector
+     * @param \bpsys\yii2\aws\s3\interfaces\HandlerResolver $inflector
      */
     public function __construct(interfaces\HandlerResolver $inflector)
     {
@@ -25,7 +25,7 @@ class Bus implements interfaces\Bus
     }
 
     /**
-     * @param \frostealth\yii2\aws\s3\interfaces\commands\Command $command
+     * @param \bpsys\yii2\aws\s3\interfaces\commands\Command $command
      *
      * @return mixed
      */

@@ -1,13 +1,13 @@
 <?php
 
-namespace frostealth\yii2\aws\s3;
+namespace bpsys\yii2\aws\s3;
 
-use frostealth\yii2\aws\s3\interfaces;
+use bpsys\yii2\aws\s3\interfaces;
 
 /**
  * Class CommandBuilder
  *
- * @package frostealth\yii2\aws\s3
+ * @package bpsys\yii2\aws\s3
  */
 class CommandBuilder implements interfaces\CommandBuilder
 {
@@ -17,27 +17,32 @@ class CommandBuilder implements interfaces\CommandBuilder
     /** @var string default acl */
     protected $acl;
 
+    /** @var int|string|\DateTime default expiration */
+    protected $expiration;
+
     /** @var interfaces\Bus */
     protected $bus;
 
     /**
      * CommandBuilder constructor.
      *
-     * @param \frostealth\yii2\aws\s3\interfaces\Bus $bus
-     * @param string                                 $bucket
-     * @param string                                 $acl
+     * @param \bpsys\yii2\aws\s3\interfaces\Bus $bus
+     * @param string $bucket
+     * @param string $acl
+     * @param int|string|\DateTime $expiration
      */
-    public function __construct(interfaces\Bus $bus, string $bucket = '', string $acl = '')
+    public function __construct(interfaces\Bus $bus, string $bucket = '', string $acl = '', $expiration = '')
     {
         $this->bus = $bus;
         $this->bucket = $bucket;
         $this->acl = $acl;
+        $this->expiration = $expiration;
     }
 
     /**
      * @param string $className
      *
-     * @return \frostealth\yii2\aws\s3\interfaces\commands\Command
+     * @return \bpsys\yii2\aws\s3\interfaces\commands\Command
      * @throws \yii\base\InvalidConfigException
      */
     public function build(string $className): interfaces\commands\Command
@@ -53,7 +58,7 @@ class CommandBuilder implements interfaces\CommandBuilder
     }
 
     /**
-     * @param \frostealth\yii2\aws\s3\interfaces\commands\Command $command
+     * @param \bpsys\yii2\aws\s3\interfaces\commands\Command $command
      */
     protected function prepareCommand(interfaces\commands\Command $command)
     {
@@ -63,6 +68,10 @@ class CommandBuilder implements interfaces\CommandBuilder
 
         if ($command instanceof interfaces\commands\HasAcl) {
             $command->withAcl($this->acl);
+        }
+
+        if ($command instanceof interfaces\commands\HasExpiration) {
+            $command->withExpiration($this->expiration);
         }
     }
 }

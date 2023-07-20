@@ -1,11 +1,11 @@
 <?php
 
-namespace frostealth\yii2\aws\s3;
+namespace bpsys\yii2\aws\s3;
 
 use Aws\ResultInterface;
-use frostealth\yii2\aws\s3\interfaces\commands\Command;
-use frostealth\yii2\aws\s3\interfaces\HandlerResolver;
-use frostealth\yii2\aws\s3\interfaces\Service as ServiceInterface;
+use bpsys\yii2\aws\s3\interfaces\commands\Command;
+use bpsys\yii2\aws\s3\interfaces\HandlerResolver;
+use bpsys\yii2\aws\s3\interfaces\Service as ServiceInterface;
 use yii\base\Component;
 use yii\base\InvalidConfigException;
 use yii\helpers\ArrayHelper;
@@ -24,8 +24,9 @@ use yii\helpers\ArrayHelper;
  * @method bool             exist(string $filename)
  * @method string           getUrl(string $filename)
  * @method string           getPresignedUrl(string $filename, $expires)
+ * @property string         $endpoint
  *
- * @package frostealth\yii2\aws\s3
+ * @package bpsys\yii2\aws\s3
  */
 class Service extends Component implements ServiceInterface
 {
@@ -35,8 +36,11 @@ class Service extends Component implements ServiceInterface
     /** @var string */
     public $defaultAcl = '';
 
+    /** @var int|string|\DateTime */
+    public $defaultPresignedExpiration = '';
+
     /** @var array S3Client config */
-    protected $clientConfig = ['version' => '2006-03-01'];
+    protected $clientConfig = ['version' => 'latest'];
 
     /** @var array */
     private $components = [];
@@ -50,10 +54,6 @@ class Service extends Component implements ServiceInterface
      */
     public function init()
     {
-        if (empty($this->clientConfig['credentials'])) {
-            throw new InvalidConfigException('Credentials are not set.');
-        }
-
         if (empty($this->clientConfig['region'])) {
             throw new InvalidConfigException('Region is not set.');
         }
@@ -70,7 +70,7 @@ class Service extends Component implements ServiceInterface
     /**
      * Executes a command.
      *
-     * @param \frostealth\yii2\aws\s3\interfaces\commands\Command $command
+     * @param \bpsys\yii2\aws\s3\interfaces\commands\Command $command
      *
      * @return mixed
      */
@@ -84,7 +84,7 @@ class Service extends Component implements ServiceInterface
      *
      * @param string $commandClass
      *
-     * @return \frostealth\yii2\aws\s3\interfaces\commands\Command
+     * @return \bpsys\yii2\aws\s3\interfaces\commands\Command
      */
     public function create(string $commandClass): Command
     {
@@ -94,7 +94,7 @@ class Service extends Component implements ServiceInterface
     /**
      * Returns command factory.
      *
-     * @return \frostealth\yii2\aws\s3\CommandFactory
+     * @return \bpsys\yii2\aws\s3\CommandFactory
      */
     public function commands(): CommandFactory
     {
@@ -104,7 +104,7 @@ class Service extends Component implements ServiceInterface
     /**
      * Returns handler resolver.
      *
-     * @return \frostealth\yii2\aws\s3\interfaces\HandlerResolver
+     * @return \bpsys\yii2\aws\s3\interfaces\HandlerResolver
      */
     public function getResolver(): HandlerResolver
     {
@@ -158,6 +158,15 @@ class Service extends Component implements ServiceInterface
     public function setHttpOptions(array $options)
     {
         $this->clientConfig['http'] = $options;
+    }
+
+    /**
+     * @param string $endpoint
+     */
+    public function setEndpoint(string $endpoint)
+    {
+        $this->clientConfig['endpoint']                = $endpoint;
+        $this->clientConfig['use_path_style_endpoint'] = true;
     }
 
     /**
@@ -241,10 +250,10 @@ class Service extends Component implements ServiceInterface
     {
         return [
             'client' => ['class' => 'Aws\S3\S3Client'],
-            'resolver' => ['class' => 'frostealth\yii2\aws\s3\HandlerResolver'],
-            'bus' => ['class' => 'frostealth\yii2\aws\s3\Bus'],
-            'builder' => ['class' => 'frostealth\yii2\aws\s3\CommandBuilder'],
-            'factory' => ['class' => 'frostealth\yii2\aws\s3\CommandFactory'],
+            'resolver' => ['class' => 'bpsys\yii2\aws\s3\HandlerResolver'],
+            'bus' => ['class' => 'bpsys\yii2\aws\s3\Bus'],
+            'builder' => ['class' => 'bpsys\yii2\aws\s3\CommandBuilder'],
+            'factory' => ['class' => 'bpsys\yii2\aws\s3\CommandFactory'],
         ];
     }
 
@@ -266,7 +275,7 @@ class Service extends Component implements ServiceInterface
                 $params = [$this->getComponent('resolver')];
                 break;
             case 'builder':
-                $params = [$this->getComponent('bus'), $this->defaultBucket, $this->defaultAcl];
+                $params = [$this->getComponent('bus'), $this->defaultBucket, $this->defaultAcl, $this->defaultPresignedExpiration];
                 break;
             case 'factory':
                 $params = [$this->getComponent('builder')];

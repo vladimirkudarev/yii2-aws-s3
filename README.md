@@ -2,21 +2,26 @@
 
 An Amazon S3 component for Yii2.
 
-[![License](https://poser.pugx.org/frostealth/yii2-aws-s3/license)](https://github.com/frostealth/yii2-aws-s3/blob/2.x/LICENSE)
-[![Latest Stable Version](https://poser.pugx.org/frostealth/yii2-aws-s3/v/stable)](https://packagist.org/packages/frostealth/yii2-aws-s3)
-[![Total Downloads](https://poser.pugx.org/frostealth/yii2-aws-s3/downloads)](https://packagist.org/packages/frostealth/yii2-aws-s3)
-[![Latest Unstable Version](https://poser.pugx.org/frostealth/yii2-aws-s3/v/unstable)](https://packagist.org/packages/frostealth/yii2-aws-s3)
+[![License](https://poser.pugx.org/bp-sys/yii2-aws-s3/license)](https://github.com/bp-sys/yii2-aws-s3/blob/2.x/LICENSE) [![Latest Stable Version](https://poser.pugx.org/bp-sys/yii2-aws-s3/v)](//packagist.org/packages/bp-sys/yii2-aws-s3) [![Total Downloads](https://poser.pugx.org/bp-sys/yii2-aws-s3/downloads)](//packagist.org/packages/bp-sys/yii2-aws-s3) [![Latest Unstable Version](https://poser.pugx.org/bp-sys/yii2-aws-s3/v/unstable)](//packagist.org/packages/bp-sys/yii2-aws-s3)
 
 > Yii2 AWS S3 uses [SemVer](http://semver.org/).
 
-> Version 2.x requires PHP 7. For PHP less 7.0 use [1.x](https://github.com/frostealth/yii2-aws-s3/tree/1.x).
+> Version 2.x requires PHP 7. For PHP less 7.0 use [1.x](https://github.com/bp-sys/yii2-aws-s3/tree/1.x).
+
+## About this project
+
+This project is a fork from the excellent project [yii2-aws-s3](https://github.com/frostealth/yii2-aws-s3) by [frostealth](https://github.com/frostealth) and [adnsio](https://github.com/adnsio).
+
+Upon their work, we add support for IAM role attached to the EC2, which you don't need to insert your credentials.
+
+We will also add support for easier integration with your models, by adding a S3MediaTrait.
 
 ## Installation
 
 1. Run the [Composer](http://getcomposer.org/download/) command to install the latest version:
 
     ```bash
-    composer require frostealth/yii2-aws-s3 ~2.0
+    composer require bp-sys/yii2-aws-s3 ~2.0
     ```
 
 2. Add the component to `config/main.php`
@@ -25,7 +30,7 @@ An Amazon S3 component for Yii2.
     'components' => [
         // ...
         's3' => [
-            'class' => 'frostealth\yii2\aws\s3\Service',
+            'class' => 'bpsys\yii2\aws\s3\Service',
             'credentials' => [ // Aws\Credentials\CredentialsInterface|array|callable
                 'key' => 'my-key',
                 'secret' => 'my-secret',
@@ -33,17 +38,22 @@ An Amazon S3 component for Yii2.
             'region' => 'my-region',
             'defaultBucket' => 'my-bucket',
             'defaultAcl' => 'public-read',
+            'defaultPresignedExpiration' => '+1 hour',
+            'endpoint' => 'http://localhost:9000',
         ],
         // ...
     ],
     ```
+
+**Credentials parameter is optional**: if you plan to use IAM roles attached to your EC2 instance there is no need for credentials. Just remove this parameter. Just be cautious if you need those credentials, this may cause errors during execution.
+**Endpoint parameter is optional**: You can specify a custom endpoint here. Great for debugging with minio for example.
 
 ## Basic usage
 
 ### Usage of the command factory and additional params
 
 ```php
-/** @var \frostealth\yii2\aws\s3\Service $s3 */
+/** @var \bpsys\yii2\aws\s3\Service $s3 */
 $s3 = Yii::$app->get('s3');
 
 /** @var \Aws\ResultInterface $result */
@@ -72,7 +82,7 @@ $signedUrl = $s3->commands()->getPresignedUrl('filename.ext', '+2 days')->execut
 ### Short syntax
 
 ```php
-/** @var \frostealth\yii2\aws\s3\Service $s3 */
+/** @var \bpsys\yii2\aws\s3\Service $s3 */
 $s3 = Yii::$app->get('s3');
 
 /** @var \Aws\ResultInterface $result */
@@ -95,34 +105,18 @@ $exist = $s3->exist('filename.ext');
 $url = $s3->getUrl('filename.ext');
 
 /** @var string $signedUrl */
-$signedUrl = $s3->getPresignedUrl('filename.ext', '+2 days');
+$signedUrl = $s3->getPresignedUrl('filename.ext', '+2 days'); // Pass only one parameter to get expiration date from component defaults
 ```
 
-### Asynchronous execution
-
-```php
-/** @var \frostealth\yii2\aws\s3\Service $s3 */
-$s3 = Yii::$app->get('s3');
-
-/** @var \GuzzleHttp\Promise\PromiseInterface $promise */
-$promise = $s3->commands()->get('filename.ext')->async()->execute();
-
-$promise = $s3->commands()->put('filename.ext', 'body')->async()->execute();
-
-$promise = $s3->commands()->delete('filename.ext')->async()->execute();
-
-$promise = $s3->commands()->upload('filename.ext', 'source')->async()->execute();
-
-$promise = $s3->commands()->list('path/')->async()->execute();
-```
+[Read more...](/docs/basic-usage.md)
 
 ## Advanced usage
 
 ```php
-/** @var \frostealth\yii2\aws\s3\interfaces\Service $s3 */
+/** @var \bpsys\yii2\aws\s3\interfaces\Service $s3 */
 $s3 = Yii::$app->get('s3');
 
-/** @var \frostealth\yii2\aws\s3\commands\GetCommand $command */
+/** @var \bpsys\yii2\aws\s3\commands\GetCommand $command */
 $command = $s3->create(GetCommand::class);
 $command->inBucket('my-another-bucket')->byFilename('filename.ext')->saveAs('/path/to/local/file.ext');
 
@@ -134,157 +128,44 @@ $result = $s3->execute($command);
 $promise = $s3->execute($command->async());
 ```
 
-### Custom commands
+[Read more...](/docs/advanced-usage.md)
 
-Commands have two types: plain commands that's handled by the `PlainCommandHandler` and commands with their own handlers.
-The plain commands wrap the native AWS S3 commands.
+## Using Traits
 
-The plain commands must implement the `PlainCommand` interface and the rest must implement the `Command` interface.
-If the command doesn't implement the `PlainCommand` interface, it must have its own handler.
-
-Every handler must extend the `Handler` class or implement the `Handler` interface.
-Handlers gets the `S3Client` instance into its constructor.
-
-The implementation of the `HasBucket` and `HasAcl` interfaces allows the command builder to set the values
-of bucket and acl by default.
-
-To make the plain commands asynchronously, you have to implement the `Asynchronous` interface.
-Also, you can use the `Async` trait to implement this interface.
-
-Consider the following command:
+Attach the Trait to the model with some media attribute that will be saved in S3:
 
 ```php
-<?php
-
-namespace app\components\s3\commands;
-
-use frostealth\yii2\aws\s3\base\commands\traits\Options;
-use frostealth\yii2\aws\s3\interfaces\commands\Command;
-use frostealth\yii2\aws\s3\interfaces\commands\HasBucket;
-
-class MyCommand implements Command, HasBucket
+class Person extends \yii\db\ActiveRecord
 {
-    use Options;
-
-    protected $bucket;
-
-    protected $something;
-
-    public function getBucket()
-    {
-        return $this->bucket;
-    }
-
-    public function inBucket(string $bucket)
-    {
-        $this->bucket = $bucket;
-
-        return $this;
-    }
-
-    public function getSomething()
-    {
-        return $this->something;
-    }
-
-    public function withSomething(string $something)
-    {
-        $this->something = $something;
-
-        return $this;
-    }
+    use \bpsys\yii2\aws\s3\traits\S3MediaTrait;
+    
+    // ...
 }
 ```
 
-The handler for this command looks like this:
-
 ```php
-<?php
+$image = \yii\web\UploadedFile::getInstance( $formModel, 'my_file_attribute' );
+// Save image as my_image.png on S3 at //my_bucket/images/ path
+// $model->image will hold "my_image.png" after this call finish with success
+$model->saveUploadedFile( $image, 'image', 'my_image.png' );
 
-namespace app\components\s3\handlers;
+// Get the URL to the image on S3
+$model->getFileUrl( 'image' );
+// Get the presigned URL to the image on S3
+// The default duration is "+1 day"
+$model->getFilePresignedUrl( 'image' );
 
-use app\components\s3\commands\MyCommand;
-use frostealth\yii2\aws\s3\base\handlers\Handler;
+// Remove the file with named saved on the image attribute
+// Continuing the example, here "//my_bucket/images/my_image.png" will be deleted from S3
+$model->removeFile( 'image' );
 
-class MyCommandHandler extends Handler
-{
-    public function handle(MyCommand $command)
-    {
-        return $this->s3Client->someAction(
-            $command->getBucket(),
-            $command->getSomething(),
-            $command->getOptions()
-        );
-    }
-}
+// Save my_image.* to S3 on //my_bucket/images/ path
+// The extension of the file will be determined by the submitted file type
+// This allows multiple file types upload (png,jpg,gif,...)
+$model->saveUploadedFile( $image, 'image', 'my_image', true );
 ```
 
-And usage this command:
-
-```php
-/** @var \frostealth\yii2\aws\s3\interfaces\Service */
-$s3 = Yii::$app->get('s3');
-
-/** @var \app\components\s3\commands\MyCommand $command */
-$command = $s3->create(MyCommand::class);
-$command->withSomething('some value')->withOption('OptionName', 'value');
-
-/** @var \Aws\ResultInterface $result */
-$result = $s3->execute($command);
-```
-
-Custom plain command looks like this:
-
-```php
-<?php
-
-namespace app\components\s3\commands;
-
-use frostealth\yii2\aws\s3\interfaces\commands\HasBucket;
-use frostealth\yii2\aws\s3\interfaces\commands\PlainCommand;
-
-class MyPlainCommand implements PlainCommand, HasBucket
-{
-    protected $args = [];
-
-    public function getBucket()
-    {
-        return $this->args['Bucket'] ?? '';
-    }
-
-    public function inBucket(string $bucket)
-    {
-        $this->args['Bucket'] = $bucket;
-
-        return $this;
-    }
-
-    public function getSomething()
-    {
-        return $this->args['something'] ?? '';
-    }
-
-    public function withSomething($something)
-    {
-        $this->args['something'] = $something;
-
-        return $this;
-    }
-
-    public function getName(): string
-    {
-        return 'AwsS3CommandName';
-    }
-
-    public function toArgs(): array
-    {
-        return $this->args;
-    }
-}
-```
-
-Any command can extend the `ExecutableCommand` class or implement the `Executable` interface that will
-allow to execute this command immediately: `$command->withSomething('some value')->execute();`.
+[Read more...](/docs/media-traits.md)
 
 ## License
 

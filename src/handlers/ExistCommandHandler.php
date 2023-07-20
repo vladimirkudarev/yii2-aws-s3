@@ -1,19 +1,19 @@
 <?php
 
-namespace frostealth\yii2\aws\s3\handlers;
+namespace bpsys\yii2\aws\s3\handlers;
 
-use frostealth\yii2\aws\s3\base\handlers\Handler;
-use frostealth\yii2\aws\s3\commands\ExistCommand;
+use bpsys\yii2\aws\s3\base\handlers\Handler;
+use bpsys\yii2\aws\s3\commands\ExistCommand;
 
 /**
  * Class ExistCommandHandler
  *
- * @package frostealth\yii2\aws\s3\handlers
+ * @package bpsys\yii2\aws\s3\handlers
  */
 final class ExistCommandHandler extends Handler
 {
     /**
-     * @param \frostealth\yii2\aws\s3\commands\ExistCommand $command
+     * @param \bpsys\yii2\aws\s3\commands\ExistCommand $command
      *
      * @return bool
      */

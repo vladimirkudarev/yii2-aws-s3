@@ -1,11 +1,11 @@
 <?php
 
-namespace frostealth\yii2\aws\s3\interfaces\commands;
+namespace bpsys\yii2\aws\s3\interfaces\commands;
 
 /**
  * Interface PlainCommand
  *
- * @package frostealth\yii2\aws\s3\interfaces\commands
+ * @package bpsys\yii2\aws\s3\interfaces\commands
  */
 interface PlainCommand extends Command
 {
